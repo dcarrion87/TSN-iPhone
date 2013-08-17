@@ -20,8 +20,8 @@
 		653777CA17B8F1B800AB86DE /* TSNGalaxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 653777C917B8F1B800AB86DE /* TSNGalaxy.m */; };
 		653777CD17B9266400AB86DE /* TSNGalaxyDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 653777CC17B9266400AB86DE /* TSNGalaxyDetailViewController.m */; };
 		653777D017B939A000AB86DE /* TSNLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 653777CF17B939A000AB86DE /* TSNLoginViewController.m */; };
-		653777D417B9539200AB86DE /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 653777D317B9539200AB86DE /* MainStoryboard.storyboard */; };
 		653777E517BAA46A00AB86DE /* TSNShared.m in Sources */ = {isa = PBXBuildFile; fileRef = 653777E417BAA46A00AB86DE /* TSNShared.m */; };
+		65DE0DEC17C006390090114E /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65DE0DEB17C006390090114E /* MainStoryboard.storyboard */; };
 		65E5003717BD24AD0096F424 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E5003617BD230E0096F424 /* MBProgressHUD.m */; };
 		65E5003F17BDCFB10096F424 /* loginbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E5003E17BDCFB10096F424 /* loginbg.png */; };
 		65E5004117BDF3420096F424 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E5004017BDF3420096F424 /* placeholder.png */; };
@@ -49,9 +49,9 @@
 		653777CC17B9266400AB86DE /* TSNGalaxyDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSNGalaxyDetailViewController.m; sourceTree = "<group>"; };
 		653777CE17B939A000AB86DE /* TSNLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSNLoginViewController.h; sourceTree = "<group>"; };
 		653777CF17B939A000AB86DE /* TSNLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSNLoginViewController.m; sourceTree = "<group>"; };
-		653777D317B9539200AB86DE /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MainStoryboard.storyboard; path = ../../../.Trash/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		653777E317BAA46A00AB86DE /* TSNShared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSNShared.h; sourceTree = "<group>"; };
 		653777E417BAA46A00AB86DE /* TSNShared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSNShared.m; sourceTree = "<group>"; };
+		65DE0DEB17C006390090114E /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		65E5003517BD230E0096F424 /* MBProgressHUD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		65E5003617BD230E0096F424 /* MBProgressHUD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		65E5003E17BDCFB10096F424 /* loginbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loginbg.png; sourceTree = "<group>"; };
@@ -110,7 +110,6 @@
 				653777AC17B8E98500AB86DE /* TSNAppDelegate.m */,
 				653777A317B8E98500AB86DE /* Supporting Files */,
 				653777C517B8EEBA00AB86DE /* TSNGalaxyListViewController.h */,
-				653777D317B9539200AB86DE /* MainStoryboard.storyboard */,
 				653777C617B8EEBA00AB86DE /* TSNGalaxyListViewController.m */,
 				653777C817B8F1B800AB86DE /* TSNGalaxy.h */,
 				653777C917B8F1B800AB86DE /* TSNGalaxy.m */,
@@ -120,6 +119,7 @@
 				653777CF17B939A000AB86DE /* TSNLoginViewController.m */,
 				653777E317BAA46A00AB86DE /* TSNShared.h */,
 				653777E417BAA46A00AB86DE /* TSNShared.m */,
+				65DE0DEB17C006390090114E /* MainStoryboard.storyboard */,
 			);
 			path = TSN;
 			sourceTree = "<group>";
@@ -194,9 +194,9 @@
 				653777AF17B8E98500AB86DE /* Default.png in Resources */,
 				653777B117B8E98500AB86DE /* Default@2x.png in Resources */,
 				653777B317B8E98500AB86DE /* Default-568h@2x.png in Resources */,
-				653777D417B9539200AB86DE /* MainStoryboard.storyboard in Resources */,
 				65E5003F17BDCFB10096F424 /* loginbg.png in Resources */,
 				65E5004117BDF3420096F424 /* placeholder.png in Resources */,
+				65DE0DEC17C006390090114E /* MainStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
