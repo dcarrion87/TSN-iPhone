@@ -29,7 +29,7 @@
 {
     [super viewDidLoad];
     
-    self.nameLabel.text = self.galaxy.name;
+    self.navigationItem.title = self.galaxy.name;
     self.redshiftLabel.text = [NSString stringWithFormat:@"%.3f",self.galaxy.redshift];
     self.raLabel.text = [NSString stringWithFormat:@"%.3f",self.galaxy.ra];
     self.decLabel.text = [NSString stringWithFormat:@"%.3f",self.galaxy.dec];
