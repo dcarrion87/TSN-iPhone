@@ -10,19 +10,20 @@
 
 @interface TSNGalaxy : NSObject
 
-@property(strong)NSString *name;
+@property(strong)NSString *galId;
+@property(strong)NSString *galName;
 @property double redshift;
 @property double ra;
 @property double dec;
 @property double complete;
 @property(strong)NSURL *thumbnailUrl;
 @property(strong)UIImage *thumbnailImage;
+@property(strong)NSMutableArray *filterImages;
+@property(strong)NSMutableArray *filterLabels;
+@property(strong)NSURL *nedUrl;
+
+
           
--(id)initWithName:(NSString *)aName
-         redshift:(double)aRedshift
-               ra:(double)aRa
-              dec:(double)aDec
-         complete:(double)aComplete
-        thumbnailUrl:(NSURL *)aThumbnailUrl;
+-(id)initWithGalId:(NSString *)galId galName:(NSString*)galName;
 
 @end

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class MBProgressHUD;
-@interface TSNGalaxyListViewController : UITableViewController{
+@interface TSNGalaxyViewController : UITableViewController{
     
      MBProgressHUD *HUD;
 }
@@ -19,5 +19,8 @@
 @property BOOL isFirstFetch;
 
 -(void)fetchGalaxies;
+-(void)displayEmptyWarning;
+-(void)displayFetchError;
+-(void)indicateFetching:(BOOL)fetching;
 
 @end

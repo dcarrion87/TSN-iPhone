@@ -15,8 +15,18 @@
 @property(weak) IBOutlet UILabel *redshiftLabel;
 @property(weak) IBOutlet UILabel *raLabel;
 @property(weak) IBOutlet UILabel *decLabel;
-@property(weak) IBOutlet UIImageView *imageView;
+@property(weak) IBOutlet UIImageView *imageViewC;
+@property(weak) IBOutlet UIImageView *imageViewL;
+@property(weak) IBOutlet UIImageView *imageViewR;
+@property(weak) IBOutlet UILabel *imageLabel;
 
 @property(strong) TSNGalaxy *galaxy;
+
+@property int imageIndex;
+
+- (IBAction)showPriorImage;
+- (IBAction)showNextImage;
+- (void)updateImageViews;
+- (void)fetchImageData;
 
 @end

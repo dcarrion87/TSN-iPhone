@@ -11,7 +11,9 @@
 @interface TSNLoginViewController : UIViewController
 
 @property(strong,nonatomic) IBOutlet UITextField *idTextField;
+@property(weak) IBOutlet UILabel *errorLabel;
 
 -(IBAction)textFieldReturn:(id)sender;
+
 
 @end

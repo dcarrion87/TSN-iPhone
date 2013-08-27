@@ -9,13 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @interface TSNShared : NSObject
-{
-    NSString *userId;
-    BOOL isAuthenticated;
-}
 
 @property (nonatomic, retain) NSString *userId;
-@property BOOL isAuthenticated;
+@property (nonatomic, retain) NSString *baseURL;
+@property (nonatomic, retain) UIImage *tnPlaceholder;
+@property (nonatomic, retain) UIImage *imgPlaceholder;
+@property (nonatomic, retain) UIImage *background;
 
 + (TSNShared*)sharedInstance;
 

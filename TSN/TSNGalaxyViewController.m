@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Daniel Carrion. All rights reserved.
 //
 
-#import "TSNGalaxyListViewController.h"
+#import "TSNGalaxyViewController.h"
 #import "TSNGalaxy.h"
 #import "TSNGalaxyDetailViewController.h"
 #import "TSNLoginViewController.h"
@@ -14,11 +14,11 @@
 #import "MBProgressHUD.h"
 
 
-@interface TSNGalaxyListViewController ()
+@interface TSNGalaxyViewController ()
 
 @end
 
-@implementation TSNGalaxyListViewController
+@implementation TSNGalaxyViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -32,27 +32,16 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    TSNShared *si = [TSNShared sharedInstance];
-    if(si.isAuthenticated == YES){
-        if(self.isFirstFetch){
-            [self fetchGalaxies];
-            self.isFirstFetch = NO;
-        }
-    }else{
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-        TSNLoginViewController * vc = [sb instantiateViewControllerWithIdentifier:@"TSNLoginViewController"];
-        [self presentViewController:vc animated:YES completion:nil];
+    if(self.isFirstFetch){
+        [self fetchGalaxies];
+        self.isFirstFetch = NO;
     }
-    
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.galaxies = [[NSMutableArray alloc] init];
-    HUD = [[MBProgressHUD alloc] initWithView:self.view];
-    [self.view addSubview:HUD];
     [self.refreshControl addTarget:self action:@selector(refreshGalaxies:) forControlEvents:UIControlEventValueChanged];
     self.isFirstFetch = YES;
 }
@@ -69,14 +58,22 @@
         return;
     }
     
-    self.isFetching = YES;
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    [HUD show:YES];
+    [self indicateFetching:YES];
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);    
     dispatch_async(queue,  ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:
-                                        [NSString stringWithFormat:@"http://production-test.theskynet.org/boinc/%@/galaxies.json?per_page=10",[TSNShared sharedInstance].userId]]];
-        
         NSError *error;
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:
+                                        [NSString stringWithFormat:@"%@/boinc/%@/galaxies.json?locale=en",
+                                        [TSNShared sharedInstance].baseURL,
+                                        [TSNShared sharedInstance].userId]] options:0 error:&error];
+        if (error) {
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                [self indicateFetching:NO];
+                [self displayFetchError];
+            });
+            return;
+        }
+        
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
         
         NSArray *gals = [json valueForKeyPath:@"result.galaxies.galaxy"];
@@ -84,24 +81,35 @@
             [self.galaxies removeAllObjects];
         });
         for (NSDictionary *gal in gals) {
-            TSNGalaxy *g = [[TSNGalaxy alloc]initWithName:[gal objectForKey:@"name"]
-                                                 redshift:[[gal objectForKey:@"redshift"] doubleValue]
-                                                       ra:[[gal objectForKey:@"ra_cent"] doubleValue]
-                                                      dec:[[gal objectForKey:@"dec_cent"] doubleValue]
-                                                 complete:[[gal objectForKey:@"percentage_complete"] doubleValue]
-                                            thumbnailUrl:[NSURL URLWithString:[gal objectForKey:@"thumbnail_url"]]
-                            ];
-            
+            // Create galaxy object with base details
+            TSNGalaxy *g = [[TSNGalaxy alloc]initWithGalId:[gal objectForKey:@"id"]
+                                                   galName:[gal objectForKey:@"name"]];
+            // Set the rest
+            [g setRedshift:[[gal objectForKey:@"redshift"] doubleValue]];
+            [g setRa:[[gal objectForKey:@"ra_cent"] doubleValue]];
+            [g setDec:[[gal objectForKey:@"dec_cent"] doubleValue]];
+            [g setComplete:[[gal objectForKey:@"percentage_complete"] doubleValue]];
+            [g setThumbnailUrl:[NSURL URLWithString:[gal objectForKey:@"thumbnail_url"]]];
+            [g setNedUrl:[NSURL URLWithString:[gal objectForKey:@"more_info_url"]]];
+                       
             dispatch_sync(dispatch_get_main_queue(), ^{
                 [self.galaxies addObject:g];
                 
             });
-            
+                      
         }
+        
+        if(self.galaxies.count == 0){
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                [self indicateFetching:NO];
+                [self displayEmptyWarning];
+            });
+            return;
+        }
+                
         
         dispatch_sync(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
-            [HUD hide:YES];
         });
         
         for (TSNGalaxy *gal in self.galaxies) {
@@ -110,15 +118,46 @@
                 dispatch_sync(dispatch_get_main_queue(), ^{
                     gal.thumbnailImage = i;
                     [self.tableView reloadData];
+                    [self indicateFetching:NO];
                 });
             });
         }
-                           
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            self.isFetching = NO;
-        });
     });
 
+}
+
+- (void)indicateFetching:(BOOL)fetching{
+    if(fetching){
+        self.isFetching = YES;
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        if(HUD == nil){
+            HUD = [[MBProgressHUD alloc] initWithView:self.view];
+            [self.view addSubview:HUD];
+        }
+        [HUD show:YES];
+    } else {
+        self.isFetching = NO;
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        [HUD hide:YES];
+    }
+}
+
+- (void)displayFetchError{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:@"There was a problem fetching galaxy data."
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+- (void)displayEmptyWarning{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning"
+                                                    message:@"There are no galaxies to enumerate for this user."
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 
 - (void)didReceiveMemoryWarning
@@ -165,9 +204,10 @@
     }
     
     TSNGalaxy *g = [self.galaxies objectAtIndex:indexPath.row];
-    cell.textLabel.text = g.name;
+    cell.textLabel.text = g.galName;
+    cell.imageView.contentMode = UIViewContentModeScaleToFill;
     if(g.thumbnailImage == nil){
-        cell.imageView.image = [UIImage imageNamed:@"placeholder.png"];
+        cell.imageView.image = [TSNShared sharedInstance].tnPlaceholder;
     } else{
         cell.imageView.image = g.thumbnailImage;
     }

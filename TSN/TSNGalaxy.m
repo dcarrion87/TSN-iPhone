@@ -10,23 +10,20 @@
 
 @implementation TSNGalaxy
 
-//@synthesize name,redshift,ra,dec,thumbnailUrl,thumbnailImage;
-
-
--(id)initWithName:(NSString *)aName
-         redshift:(double)aRedshift
-               ra:(double)aRa
-              dec:(double)aDec
-         complete:(double)aComplete
-     thumbnailUrl:(NSURL *)aThumbnailUrl{
+-(id)initWithGalId:(NSString *)galId galName:(NSString*)galName{
     self=[super init];
     if(self){
-        self.name=aName;
-        self.redshift=aRedshift;
-        self.ra=aRa;
-        self.dec=aDec;
-        self.complete=aComplete;
-        self.thumbnailUrl=aThumbnailUrl;
+        self.galId=galId;
+        self.galName=galName;
+        self.redshift=0;
+        self.ra=0;
+        self.dec=0;
+        self.complete=0;
+        self.thumbnailUrl=nil;
+        self.thumbnailImage=nil;
+        
+        self.filterImages = [[NSMutableArray alloc] init];
+        self.filterLabels = [[NSMutableArray alloc] init];
     }
     return self;
 }

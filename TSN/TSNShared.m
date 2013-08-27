@@ -11,8 +11,6 @@
 
 @implementation TSNShared
 
-@synthesize userId,isAuthenticated;
-
 + (TSNShared*)sharedInstance
 {
     static TSNShared *sharedInstance = nil;
@@ -29,11 +27,17 @@
     self = [super init];
     if ( self )
     {
-        userId = [[NSString alloc] init];
-        isAuthenticated = NO;
-        
+        self.userId = [[NSString alloc] init];
+        self.baseURL = @"http://production-test.theskynet.org";
+        self.imgPlaceholder = [UIImage imageNamed:@"imgPlaceholder.png"];
+        self.tnPlaceholder = [UIImage imageNamed:@"tnPlaceholder.png"];
+        self.background= [UIImage imageNamed:@"background.png"];
     }
     return self;
+}
+
+- (void) clear{
+    self.userId = nil;
 }
 
 

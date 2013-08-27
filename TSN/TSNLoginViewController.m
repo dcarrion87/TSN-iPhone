@@ -7,7 +7,7 @@
 //
 
 #import "TSNLoginViewController.h"
-#import "TSNGalaxyListViewController.h"
+#import "TSNGalaxyViewController.h"
 #import "TSNShared.h"
 
 @interface TSNLoginViewController ()
@@ -28,8 +28,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"loginbg.png"]];
+	// Set vew background
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[TSNShared sharedInstance].background];
 }
 
 - (void)didReceiveMemoryWarning
@@ -43,14 +43,22 @@
     [sender resignFirstResponder];
 }
 
--(IBAction)loginButton:(id)sender{
-
-    TSNShared *si = [TSNShared sharedInstance];
-    if([self.idTextField.text length] > 0){
-        [si setUserId:self.idTextField.text];
-        [si setIsAuthenticated:YES];
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender{
+    
+    if([identifier isEqualToString:@"TSNLoginSegue"]){
+        TSNShared *si = [TSNShared sharedInstance];
+        NSPredicate *idTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"(?:[1-9]+)"];
+        if([idTest evaluateWithObject:self.idTextField.text]){
+            [si setUserId:self.idTextField.text];
+            self.errorLabel.hidden = YES;
+            return YES;
+        } else{
+            self.errorLabel.hidden = NO;
+        }
+        
     }
-    [self dismissViewControllerAnimated:YES completion:nil];
+    return NO;
 }
+
 
 @end
