@@ -52,6 +52,7 @@
     [self.refreshControl endRefreshing];
 }
 
+// Move this to Galaxy Manager class
 - (void)fetchGalaxies
 {
     if(self.isFetching){
@@ -65,7 +66,7 @@
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:
                                         [NSString stringWithFormat:@"%@/boinc/%@/galaxies.json?locale=en",
                                         [TSNShared sharedInstance].baseURL,
-                                        [TSNShared sharedInstance].userId]] options:0 error:&error];
+                                        [[TSNShared sharedInstance] getUserId]]] options:0 error:&error];
         if (error) {
             dispatch_sync(dispatch_get_main_queue(), ^{
                 [self indicateFetching:NO];

@@ -74,19 +74,19 @@
     }
 }
 
+// Move this to Galaxy Manager class
 -(void)fetchImageData{
     if(self.galaxy.filterImages.count > 0){
         return;
     }
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    // This to move eventually. Still deciding how to manage collecting subview detail.
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     dispatch_async(queue,  ^{
         NSError *error;
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:
                                                       [NSString stringWithFormat:@"%@/boinc/%@/galaxies/%@.json?locale=en",
                                                        [TSNShared sharedInstance].baseURL,
-                                                       [TSNShared sharedInstance].userId,
+                                                       [[TSNShared sharedInstance] getUserId],
                                                        self.galaxy.galId]]options:0 error:&error];
         if(error){
             dispatch_sync(dispatch_get_main_queue(), ^{

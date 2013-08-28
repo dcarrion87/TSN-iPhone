@@ -28,13 +28,20 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.navigationItem.title = [TSNShared sharedInstance].userId;
+    self.navigationItem.title = [[TSNShared sharedInstance] getUserId];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([segue.identifier isEqualToString:@"TSNLogoutSegue"]){
+        [[TSNShared sharedInstance] clearUserId];
+        NSLog([[TSNShared sharedInstance] getUserId]);
+    }
 }
 
 @end

@@ -8,6 +8,7 @@
 
 #import "TSNShared.h"
 #import "TSNLoginViewController.h"
+#import "KeychainItemWrapper.h"
 
 @implementation TSNShared
 
@@ -27,7 +28,6 @@
     self = [super init];
     if ( self )
     {
-        self.userId = [[NSString alloc] init];
         self.baseURL = @"http://production-test.theskynet.org";
         self.imgPlaceholder = [UIImage imageNamed:@"imgPlaceholder.png"];
         self.tnPlaceholder = [UIImage imageNamed:@"tnPlaceholder.png"];
@@ -36,9 +36,21 @@
     return self;
 }
 
-- (void) clear{
-    self.userId = nil;
+
+- (void) setUserId: (NSString*) userId {
+    [self clearUserId];
+    KeychainItemWrapper *wrapper = [[KeychainItemWrapper alloc]initWithIdentifier:@"LoginData" accessGroup:nil];
+    [wrapper setObject:userId forKey:(__bridge id)kSecAttrAccount];
 }
 
+- (NSString*) getUserId{
+    KeychainItemWrapper *wrapper = [[KeychainItemWrapper alloc]initWithIdentifier:@"LoginData" accessGroup:nil];
+    return [wrapper objectForKey:(__bridge id)kSecAttrAccount];
+}
+
+- (void) clearUserId{
+    KeychainItemWrapper *wrapper = [[KeychainItemWrapper alloc]initWithIdentifier:@"LoginData" accessGroup:nil];
+    [wrapper resetKeychainItem];
+}
 
 @end

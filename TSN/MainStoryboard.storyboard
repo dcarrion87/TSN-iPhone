@@ -212,7 +212,7 @@
                     <navigationItem key="navigationItem" id="Rkf-s2-D99">
                         <barButtonItem key="rightBarButtonItem" title="Logout" id="Ng4-tL-Zds">
                             <connections>
-                                <segue destination="ego-Np-krN" kind="modal" id="IbP-Hj-7Xb"/>
+                                <segue destination="ego-Np-krN" kind="modal" identifier="TSNLogoutSegue" id="IbP-Hj-7Xb"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

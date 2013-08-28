@@ -30,6 +30,15 @@
     [super viewDidLoad];
 	// Set vew background
     self.view.backgroundColor = [UIColor colorWithPatternImage:[TSNShared sharedInstance].background];
+
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    self.idTextField.text = nil;    
+    if([[TSNShared sharedInstance] getUserId].length > 0){
+        self.idTextField.text = [[TSNShared sharedInstance] getUserId];
+        [self performSegueWithIdentifier:@"TSNLoginSegue" sender: self];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -47,7 +56,7 @@
     
     if([identifier isEqualToString:@"TSNLoginSegue"]){
         TSNShared *si = [TSNShared sharedInstance];
-        NSPredicate *idTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"(?:[1-9]+)"];
+        NSPredicate *idTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"(?:[0-9]+)"];
         if([idTest evaluateWithObject:self.idTextField.text]){
             [si setUserId:self.idTextField.text];
             self.errorLabel.hidden = YES;

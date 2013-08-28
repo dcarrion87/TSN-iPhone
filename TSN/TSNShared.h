@@ -10,12 +10,14 @@
 
 @interface TSNShared : NSObject
 
-@property (nonatomic, retain) NSString *userId;
 @property (nonatomic, retain) NSString *baseURL;
 @property (nonatomic, retain) UIImage *tnPlaceholder;
 @property (nonatomic, retain) UIImage *imgPlaceholder;
 @property (nonatomic, retain) UIImage *background;
 
 + (TSNShared*)sharedInstance;
+- (void) setUserId: (NSString*) userId;
+- (NSString*) getUserId;
+- (void) clearUserId;
 
 @end
