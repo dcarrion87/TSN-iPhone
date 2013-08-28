@@ -67,6 +67,7 @@
                                         [NSString stringWithFormat:@"%@/boinc/%@/galaxies.json?locale=en",
                                         [TSNShared sharedInstance].baseURL,
                                         [[TSNShared sharedInstance] getUserId]]] options:0 error:&error];
+        // Display error on retrieval problems.
         if (error) {
             dispatch_sync(dispatch_get_main_queue(), ^{
                 [self indicateFetching:NO];
@@ -100,6 +101,7 @@
                       
         }
         
+        // If we retrieved no galaxies let the user know
         if(self.galaxies.count == 0){
             dispatch_sync(dispatch_get_main_queue(), ^{
                 [self indicateFetching:NO];

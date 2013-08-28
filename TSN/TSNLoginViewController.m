@@ -55,10 +55,10 @@
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender{
     
     if([identifier isEqualToString:@"TSNLoginSegue"]){
-        TSNShared *si = [TSNShared sharedInstance];
+        // Test to make sure user id matches numbers
         NSPredicate *idTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"(?:[0-9]+)"];
         if([idTest evaluateWithObject:self.idTextField.text]){
-            [si setUserId:self.idTextField.text];
+            [[TSNShared sharedInstance] setUserId:self.idTextField.text];
             self.errorLabel.hidden = YES;
             return YES;
         } else{

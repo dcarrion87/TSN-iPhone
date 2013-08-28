@@ -13,6 +13,7 @@
 @property(strong,nonatomic) IBOutlet UITextField *idTextField;
 @property(weak) IBOutlet UILabel *errorLabel;
 
+// For keyboard
 -(IBAction)textFieldReturn:(id)sender;
 
 

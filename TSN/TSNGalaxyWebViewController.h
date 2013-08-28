@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TSNGalaxy.h"
 
-@interface TSNGalaxyNEDViewController : UIViewController
+@interface TSNGalaxyWebViewController : UIViewController
 
 @property(weak) IBOutlet UIWebView *nedPage;
 @property(strong) TSNGalaxy *galaxy;

@@ -39,18 +39,18 @@
 
 - (void) setUserId: (NSString*) userId {
     [self clearUserId];
-    KeychainItemWrapper *wrapper = [[KeychainItemWrapper alloc]initWithIdentifier:@"LoginData" accessGroup:nil];
-    [wrapper setObject:userId forKey:(__bridge id)kSecAttrAccount];
+    KeychainItemWrapper *k = [[KeychainItemWrapper alloc]initWithIdentifier:@"LoginData" accessGroup:nil];
+    [k setObject:userId forKey:(__bridge id)kSecAttrAccount];
 }
 
 - (NSString*) getUserId{
-    KeychainItemWrapper *wrapper = [[KeychainItemWrapper alloc]initWithIdentifier:@"LoginData" accessGroup:nil];
-    return [wrapper objectForKey:(__bridge id)kSecAttrAccount];
+    KeychainItemWrapper *k = [[KeychainItemWrapper alloc]initWithIdentifier:@"LoginData" accessGroup:nil];
+    return [k objectForKey:(__bridge id)kSecAttrAccount];
 }
 
 - (void) clearUserId{
-    KeychainItemWrapper *wrapper = [[KeychainItemWrapper alloc]initWithIdentifier:@"LoginData" accessGroup:nil];
-    [wrapper resetKeychainItem];
+    KeychainItemWrapper *k = [[KeychainItemWrapper alloc]initWithIdentifier:@"LoginData" accessGroup:nil];
+    [k resetKeychainItem];
 }
 
 @end

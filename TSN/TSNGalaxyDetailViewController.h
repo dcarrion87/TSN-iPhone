@@ -22,11 +22,15 @@
 
 @property(strong) TSNGalaxy *galaxy;
 
+// For image gesture tracking
 @property int imageIndex;
 
+// For controlling filter image display
 - (IBAction)showPriorImage;
 - (IBAction)showNextImage;
 - (void)updateImageViews;
+
+// Gets image data from server
 - (void)fetchImageData;
 
 @end

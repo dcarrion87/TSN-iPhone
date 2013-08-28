@@ -39,8 +39,8 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if([segue.identifier isEqualToString:@"TSNLogoutSegue"]){
+        // Clear the user id as we log out.
         [[TSNShared sharedInstance] clearUserId];
-        NSLog([[TSNShared sharedInstance] getUserId]);
     }
 }
 

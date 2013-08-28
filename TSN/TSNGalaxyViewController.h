@@ -18,9 +18,14 @@
 @property BOOL isFetching;
 @property BOOL isFirstFetch;
 
+// Fetching galaxies from JSON API
 -(void)fetchGalaxies;
+
+// Message alerts
 -(void)displayEmptyWarning;
 -(void)displayFetchError;
+
+// Indicate to user we're fetching
 -(void)indicateFetching:(BOOL)fetching;
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "TSNGalaxyDetailViewController.h"
-#import "TSNGalaxyNEDViewController.h"
+#import "TSNGalaxyWebViewController.h"
 #import "TSNShared.h"
 
 @interface TSNGalaxyDetailViewController ()
@@ -61,11 +61,14 @@
 }
 
 - (void)updateImageViews{
+    
+    // If we have filter images downloaded, update corresponding image views.
     if(self.galaxy.filterImages.count > 0){
         self.imageViewL.image = [self.galaxy.filterImages objectAtIndex:(self.imageIndex-1)%(self.galaxy.filterImages.count)];
         self.imageViewC.image = [self.galaxy.filterImages objectAtIndex:self.imageIndex%(self.galaxy.filterImages.count)];
         self.imageViewR.image = [self.galaxy.filterImages objectAtIndex:(self.imageIndex+1)%(self.galaxy.filterImages.count)];
         self.imageLabel.text = [self.galaxy.filterLabels objectAtIndex:self.imageIndex%(self.galaxy.filterLabels.count)];
+    // Otherwise load our placeholder images.
     } else {
         self.imageViewC.image = [TSNShared sharedInstance].imgPlaceholder;
         self.imageViewL.image = [TSNShared sharedInstance].imgPlaceholder;
@@ -74,7 +77,6 @@
     }
 }
 
-// Move this to Galaxy Manager class
 -(void)fetchImageData{
     if(self.galaxy.filterImages.count > 0){
         return;
@@ -88,6 +90,7 @@
                                                        [TSNShared sharedInstance].baseURL,
                                                        [[TSNShared sharedInstance] getUserId],
                                                        self.galaxy.galId]]options:0 error:&error];
+        // Return if theres a problem with connection.
         if(error){
             dispatch_sync(dispatch_get_main_queue(), ^{
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
@@ -96,13 +99,17 @@
         }
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
         NSDictionary *filterImages = [json valueForKeyPath:@"result.galaxy.filter_images"];
+        // Loop through filter images and add image/label objects
         for (id filterImage in filterImages) {
             dispatch_async(queue,  ^{
                 UIImage *i = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[filterImages objectForKey:filterImage]]]];
                 dispatch_sync(dispatch_get_main_queue(), ^{
-                    [self.galaxy.filterLabels addObject:filterImage];
-                    [self.galaxy.filterImages addObject:i];
-                    [self updateImageViews];
+                    // Only add if an image exists.
+                    if(i != nil){
+                        [self.galaxy.filterLabels addObject:filterImage];
+                        [self.galaxy.filterImages addObject:i];
+                        [self updateImageViews];
+                    }
                     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                 });
             });
@@ -113,8 +120,8 @@
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if([segue.identifier isEqualToString:@"TSNGalaxyNEDSegue"]){
-        TSNGalaxyNEDViewController *vc = (TSNGalaxyNEDViewController *)segue.destinationViewController;
+    if([segue.identifier isEqualToString:@"TSNGalaxyWebSegue"]){
+        TSNGalaxyWebViewController *vc = (TSNGalaxyWebViewController *)segue.destinationViewController;
         vc.galaxy = self.galaxy;
         
     }

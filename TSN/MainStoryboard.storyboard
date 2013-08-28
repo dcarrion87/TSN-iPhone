@@ -344,7 +344,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="DGJ-LT-2sT" kind="push" identifier="TSNGalaxyNEDSegue" id="BuC-7k-3cx"/>
+                                    <segue destination="DGJ-LT-2sT" kind="push" identifier="TSNGalaxyWebSegue" id="BuC-7k-3cx"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -415,10 +415,10 @@
             </objects>
             <point key="canvasLocation" x="3398" y="27"/>
         </scene>
-        <!--GalaxyNED View Controller-->
+        <!--Galaxy Web View Controller-->
         <scene sceneID="TwZ-nl-fdX">
             <objects>
-                <viewController id="DGJ-LT-2sT" customClass="TSNGalaxyNEDViewController" sceneMemberID="viewController">
+                <viewController id="DGJ-LT-2sT" customClass="TSNGalaxyWebViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XkN-RU-Psw">
                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -509,16 +509,16 @@
                 <relationship kind="outlet" name="redshiftLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
-        <class className="TSNGalaxyNEDViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TSNGalaxyNEDViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="nedPage" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
         <class className="TSNGalaxyViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TSNGalaxyViewController.h"/>
             <relationships>
                 <relationship kind="action" name="refreshGalaxies:"/>
+            </relationships>
+        </class>
+        <class className="TSNGalaxyWebViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TSNGalaxyWebViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="nedPage" candidateClass="UIWebView"/>
             </relationships>
         </class>
         <class className="TSNLoginViewController" superclassName="UIViewController">

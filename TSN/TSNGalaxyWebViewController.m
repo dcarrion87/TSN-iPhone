@@ -6,13 +6,13 @@
 //  Copyright (c) 2013 Daniel Carrion. All rights reserved.
 //
 
-#import "TSNGalaxyNEDViewController.h"
+#import "TSNGalaxyWebViewController.h"
 
-@interface TSNGalaxyNEDViewController ()
+@interface TSNGalaxyWebViewController ()
 
 @end
 
-@implementation TSNGalaxyNEDViewController
+@implementation TSNGalaxyWebViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

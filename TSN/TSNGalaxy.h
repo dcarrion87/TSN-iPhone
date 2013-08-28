@@ -22,8 +22,6 @@
 @property(strong)NSMutableArray *filterLabels;
 @property(strong)NSURL *nedUrl;
 
-
-          
 -(id)initWithGalId:(NSString *)galId galName:(NSString*)galName;
 
 @end
