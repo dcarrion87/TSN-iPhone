@@ -1,9 +1,7 @@
-# 
 #
 # iPhone Software Engineering
 # Assignment 1
 # Daniel Carrion (3349681)
-#
 #
 
 About the app
@@ -15,6 +13,11 @@ users to view their contribution, trophies, news, and other information.
 
 See http://production-test.theskynet.org for more information on the project.
 
+3rd Party Code Used
+-------------------
+
+- ARCified KeyChain Wrapper from https://gist.github.com/dhoerl/1170641
+- MBProgressHUD from https://github.com/jdg/MBProgressHUD
 
 Important notes to marker
 --------------------------
